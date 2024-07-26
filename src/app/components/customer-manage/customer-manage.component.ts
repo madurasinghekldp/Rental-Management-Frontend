@@ -32,7 +32,7 @@ export class CustomerManageComponent implements OnInit{
 
   createCustomer(){
     this.customerService.create(this.customer).subscribe(data=>{
-      console.log(data);
+      this.loadCustomers();
       Swal.fire({
         position: "top-end",
         icon: "success",
@@ -55,11 +55,31 @@ export class CustomerManageComponent implements OnInit{
   }
 
   deleteCustomer(customer:any){
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.customerService.delete(customer.id).subscribe(res=>{
+          this.loadCustomers();
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+          });
+        });
+      }
+    });
 
   }
 
   updateCustomer(customer:any){
-    
+
   }
 
 }
