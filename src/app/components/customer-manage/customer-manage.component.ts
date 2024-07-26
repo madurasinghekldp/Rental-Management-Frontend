@@ -21,6 +21,15 @@ export class CustomerManageComponent implements OnInit{
     contact:undefined
   };
 
+  public selectedCustomer = {
+    id:undefined,
+    name:undefined,
+    city:undefined,
+    contact:undefined
+  };
+
+  public modelPurpose:any;
+
   public customerList:any = [];
 
   constructor(private customerService:CustomerService){}
@@ -29,6 +38,7 @@ export class CustomerManageComponent implements OnInit{
   ngOnInit(): void {
     this.loadCustomers();
   }
+
 
   createCustomer(){
     this.customerService.create(this.customer).subscribe(data=>{
@@ -69,7 +79,7 @@ export class CustomerManageComponent implements OnInit{
           this.loadCustomers();
           Swal.fire({
             title: "Deleted!",
-            text: "Your file has been deleted.",
+            text: "Customer deleted.",
             icon: "success"
           });
         });
@@ -78,8 +88,22 @@ export class CustomerManageComponent implements OnInit{
 
   }
 
-  updateCustomer(customer:any){
+  loadUpdateCustomer(customer:any) {
+    this.selectedCustomer.id = customer.id;
+    this.selectedCustomer.name = customer.name;
+    this.selectedCustomer.city = customer.city;
+    this.selectedCustomer.contact = customer.contact;
+  }
 
+  updateCustomer(){
+    this.customerService.update(this.selectedCustomer).subscribe(res=>{
+      this.loadCustomers();
+      Swal.fire({
+        title: "Updated!",
+        text: "Customer Updated.",
+        icon: "success"
+      });
+    });
   }
 
 }
