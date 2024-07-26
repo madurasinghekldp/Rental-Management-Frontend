@@ -1,1 +1,71 @@
-<p>customer-manage works!</p>
+<div class="container">
+    <h1 class=" text-center my-4 p-4 text-white fw-bolder" style="background-color: #0000FF;">View Customers</h1>
+    <div class="d-inline my-5 p-3">
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Add Customer
+        </button>
+    </div>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">City</th>
+            <th scope="col">Contact</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let customer of customerList">
+            <th scope="row">{{customer.id}}</th>
+            <td>{{customer.name}}</td>
+            <td>{{customer.city}}</td>
+            <td>{{customer.contact}}</td>
+            <td><i class="btn bi bi-trash3 btn-outline-danger" (click)="deleteCustomer(customer)"></i>
+                <span class=" mx-1"></span>
+                <i class="btn bi bi-pencil-square btn-outline-success" (click)="updateCustomer(customer)"
+                 data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i></td>
+          </tr>
+          
+        </tbody>
+      </table>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add Customer</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="form">
+                <div class="mb-3 row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputName" [(ngModel)]="customer.name" #name="ngModel" required>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">City</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputCity" [(ngModel)]="customer.city" #city="ngModel" required>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Contact</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputContact" [(ngModel)]="customer.contact" #contact="ngModel" required>
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="createCustomer()"
+          [class.disabled]="name.invalid || city.invalid || contact.invalid">Save Customer</button>
+        </div>
+      </div>
+    </div>
+  </div>
